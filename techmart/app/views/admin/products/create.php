@@ -23,6 +23,22 @@
         </div>
       </div>
 
+      <!-- CHỌN LOẠI SẢN PHẨM -->
+      <div class="mb-3">
+        <label class="form-label">Danh mục sản phẩm</label>
+        <select name="category_id" class="form-select" required>
+          <option value="">-- Chọn danh mục --</option>
+          <?php if (!empty($categories)): ?>
+            <?php foreach ($categories as $cat): ?>
+              <option value="<?= $cat['id'] ?>">
+                  <?= htmlspecialchars($cat['name']) ?>
+              </option>
+            <?php endforeach; ?>
+          <?php endif; ?>
+        </select>
+      </div>
+      <!-- HẾT CHỌN LOẠI -->
+
       <div class="mb-3">
         <label class="form-label">Mô tả ngắn</label>
         <textarea name="short_desc" class="form-control" rows="2"></textarea>

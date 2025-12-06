@@ -3,10 +3,12 @@
 class ProductController extends Controller
 {
     protected $productModel;
+    protected $categoryModel;
 
     public function __construct()
     {
         $this->productModel = $this->model('Product');
+        $this->categoryModel = $this->model('Category'); 
     }
 
     // Danh sách + tìm kiếm
@@ -24,8 +26,12 @@ class ProductController extends Controller
     // Form thêm mới
     public function create()
     {
+        // Lấy danh sách loại sản phẩm
+        $categories = $this->categoryModel->getAllActive();
+
         $this->render('admin/products/create', [
-            'title' => 'Thêm sản phẩm mới'
+            'title'       => 'Thêm sản phẩm mới',
+            'categories'  => $categories
         ], 'layouts/admin');
     }
 
@@ -45,9 +51,10 @@ class ProductController extends Controller
             'stock'       => $_POST['stock'] ?? 0,
             'status'      => $_POST['status'] ?? 'active',
             'thumbnail'   => null,
+            'category_id' => (int)($_POST['category_id'] ?? 0),
         ];
 
-        // upload ảnh đơn giản
+        // upload ảnh 
         if (!empty($_FILES['thumbnail']['name'])) {
             $fileName = time() . '_' . basename($_FILES['thumbnail']['name']);
             $target   = __DIR__ . '/../../../public/assets/uploads/products/' . $fileName;

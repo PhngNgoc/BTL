@@ -57,11 +57,12 @@
         <div class="row g-4">
             <?php
             $categories = [
-                ['icon' => 'bi-phone',     'name' => 'Điện thoại', 'desc' => 'Smartphone cao cấp từ các thương hiệu hàng đầu'],
-                ['icon' => 'bi-laptop',    'name' => 'Laptop',     'desc' => 'Máy tính xách tay hiệu năng cao cho mọi nhu cầu'],
-                ['icon' => 'bi-headphones','name' => 'Tai nghe',   'desc' => 'Âm thanh chất lượng cao với công nghệ tiên tiến'],
-                ['icon' => 'bi-lightning', 'name' => 'Phụ kiện',   'desc' => 'Phụ kiện công nghệ đa dạng và tiện ích'],
+                ['id' => 2, 'icon' => 'bi-phone',      'name' => 'Điện thoại', 'desc' => 'Smartphone cao cấp từ các thương hiệu hàng đầu'],
+                ['id' => 1, 'icon' => 'bi-laptop',     'name' => 'Laptop',     'desc' => 'Máy tính xách tay hiệu năng cao cho mọi nhu cầu'],
+                ['id' => 4, 'icon' => 'bi-headphones', 'name' => 'Tai nghe',   'desc' => 'Âm thanh chất lượng cao với công nghệ tiên tiến'],
+                ['id' => 3, 'icon' => 'bi-lightning',  'name' => 'Phụ kiện',   'desc' => 'Phụ kiện công nghệ đa dạng và tiện ích'],
             ];
+
             foreach ($categories as $cat): ?>
                 <div class="col-md-3">
                     <div class="ts-category-card">
@@ -70,10 +71,11 @@
                         </div>
                         <h5 class="mb-2"><?= $cat['name'] ?></h5>
                         <p class="mb-3 text-muted small"><?= $cat['desc'] ?></p>
-                        <a href="<?= BASE_URL ?>index.php?url=product/index"
-                           class="ts-link-arrow">
-                            Xem thêm <span class="ms-1">→</span>
+                        <a href="<?= BASE_URL ?>index.php?url=product/index&category=<?= $cat['id'] ?>"
+                        class="ts-link-arrow">
+                        Xem thêm <span class="ms-1">→</span>
                         </a>
+
                     </div>
                 </div>
             <?php endforeach; ?>

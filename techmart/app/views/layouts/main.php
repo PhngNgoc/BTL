@@ -32,6 +32,25 @@
                 <span class="fw-bold">TechMart</span>
             </a>
 
+            <!-- Nút toggle cho mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Menu giữa -->
+            <div class="collapse navbar-collapse" id="mainMenu">
+                <ul class="navbar-nav ms-4">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>index.php?url=about/index">Giới thiệu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>index.php?url=faq/index">Hỏi & Đáp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= BASE_URL ?>index.php?url=contact/index">Liên hệ</a>
+                    </li>
+                </ul>
+            </div>
             <!-- Menu phải -->
             <div class="ms-auto d-flex align-items-center gap-3">
                 <!-- Icon user -->
@@ -102,12 +121,15 @@
                 <div class="col-md-3">
                     <h6 class="text-white mb-3">Hỗ trợ</h6>
                     <ul class="list-unstyled text-white-50 mb-0">
+                        <li><a href="<?= BASE_URL ?>index.php?url=about/index" class="ts-footer-link">Giới thiệu</a></li>
+                        <li><a href="<?= BASE_URL ?>index.php?url=faq/index" class="ts-footer-link">Hỏi & Đáp</a></li>
+                        <li><a href="<?= BASE_URL ?>index.php?url=contact/index" class="ts-footer-link">Liên hệ</a></li>
                         <li><a href="#" class="ts-footer-link">Chính sách bảo hành</a></li>
                         <li><a href="#" class="ts-footer-link">Hướng dẫn mua hàng</a></li>
                         <li><a href="#" class="ts-footer-link">Chính sách đổi trả</a></li>
-                        <li><a href="#" class="ts-footer-link">Liên hệ</a></li>
                     </ul>
                 </div>
+
 
                 <!-- Cột liên hệ -->
                 <div class="col-md-3">
@@ -117,6 +139,10 @@
                         <li><i class="bi bi-envelope-fill me-2"></i>info@techstore.com</li>
                         <li><i class="bi bi-geo-alt-fill me-2"></i>123 Đường ABC, Quận 1, TP.HCM</li>
                     </ul>
+                    <a href="<?= BASE_URL ?>index.php?url=contact/index" class="btn btn-outline-primary">
+    Liên hệ với chúng tôi
+</a>
+
                 </div>
             </div>
         </div>

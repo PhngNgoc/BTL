@@ -59,6 +59,34 @@ class App
             $url = filter_var($url, FILTER_SANITIZE_URL);
             return explode('/', $url);
         }
+        // CONTACT FORM SUBMIT
+if ($this->url == 'contact/submit') {
+    require APP_ROOT . 'controllers/ContactController.php';
+    (new ContactController())->submit();
+    return;
+}
+
+// ADMIN - LIST CONTACTS
+if ($this->url == 'admin/contacts') {
+    require APP_ROOT . 'controllers/ContactController.php';
+    (new ContactController())->index();
+    return;
+}
+
+// ADMIN - MARK REPLIED
+if (preg_match('/admin\/contacts\/reply\/(\d+)/', $this->url, $m)) {
+    require APP_ROOT . 'controllers/ContactController.php';
+    (new ContactController())->markReplied($m[1]);
+    return;
+}
+
+// ADMIN - DELETE CONTACT
+if (preg_match('/admin\/contacts\/delete\/(\d+)/', $this->url, $m)) {
+    require APP_ROOT . 'controllers/ContactController.php';
+    (new ContactController())->delete($m[1]);
+    return;
+}
+
         // mặc định: product/index
         return ['product', 'index'];
     }

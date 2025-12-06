@@ -2,28 +2,31 @@
 
 class Product extends Model {
 
-    public function getAll($keyword = '', $category = null) {
-        $sql = "SELECT * FROM products WHERE status = 'active'";
+public function getAll($keyword = '', $category = null)
+{
+    $sql = "SELECT * FROM products WHERE 1 ";
 
-        if ($keyword !== '') {
-            $sql .= " AND name LIKE :kw";
-        }
-        if ($category !== null) {
-            $sql .= " AND category_id = :cate";
-        }
-
-        $stmt = $this->db->prepare($sql);
-
-        if ($keyword !== '') {
-            $stmt->bindValue(':kw', "%{$keyword}%");
-        }
-        if ($category !== null) {
-            $stmt->bindValue(':cate', $category, PDO::PARAM_INT);
-        }
-
-        $stmt->execute();
-        return $stmt->fetchAll();
+    if ($keyword) {
+        $sql .= " AND name LIKE :keyword ";
     }
+
+    if ($category) {
+        $sql .= " AND category_id = :category ";
+    }
+
+    $stmt = $this->db->prepare($sql);
+
+    if ($keyword) {
+        $stmt->bindValue(':keyword', "%$keyword%");
+    }
+
+    if ($category) {
+        $stmt->bindValue(':category', $category, PDO::PARAM_INT);
+    }
+
+    $stmt->execute();
+    return $stmt->fetchAll();
+}
 
     public function getById($id) {
         $stmt = $this->db->prepare("SELECT * FROM products WHERE id = :id");
@@ -31,13 +34,53 @@ class Product extends Model {
         return $stmt->fetch();
     }
 
+    // Hàm tạo slug đơn giản từ tên
+    private function toSlug($str)
+    {
+        $str = strtolower(trim($str));
+        // Nếu muốn xử lý tiếng Việt chuẩn hơn có thể thêm iconv ở đây
+        $str = preg_replace('/[^a-z0-9]+/', '-', $str);
+        return trim($str, '-');
+    }
+
+    // (tuỳ chọn) kiểm tra slug đã tồn tại hay chưa
+    private function slugExists($slug)
+    {
+        $stmt = $this->db->prepare("SELECT id FROM products WHERE slug = :slug");
+        $stmt->execute([':slug' => $slug]);
+        return $stmt->fetchColumn() !== false;
+    }
+
     public function createSimple($data)
-{
-    $sql = "INSERT INTO products (name, price, short_desc, description, stock, status, thumbnail, category_id)
-            VALUES (:name, :price, :short_desc, :description, :stock, :status, :thumbnail, 1)"; // tạm category_id=1
-    $stmt = $this->db->prepare($sql);
-    $stmt->execute($data);
-}
+    {
+        // Tạo slug từ name
+        $slugBase = $this->toSlug($data['name']);
+        $slug     = $slugBase;
+
+        // Nếu muốn đảm bảo không trùng slug:
+        $i = 1;
+        while ($this->slugExists($slug)) {
+            $slug = $slugBase . '-' . $i++;
+        }
+
+        $sql = "INSERT INTO products 
+                (name, slug, price, short_desc, description, stock, status, thumbnail, category_id)
+                VALUES 
+                (:name, :slug, :price, :short_desc, :description, :stock, :status, :thumbnail, :category_id)";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            ':name'        => $data['name'],
+            ':slug'        => $slug,
+            ':price'       => $data['price'],
+            ':short_desc'  => $data['short_desc'],
+            ':description' => $data['description'],
+            ':stock'       => $data['stock'],
+            ':status'      => $data['status'],
+            ':thumbnail'   => $data['thumbnail'],
+            ':category_id' => $data['category_id'],
+        ]);
+    }
 
 public function updateSimple($id, $data)
 {
