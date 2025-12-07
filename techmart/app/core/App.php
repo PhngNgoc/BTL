@@ -8,23 +8,27 @@ class App
 
     public function __construct()
     {
-        $url = $this->parseUrl();
+        $url = $this->parseUrl(); // luôn là mảng
 
-        // Xử lý controller (có hỗ trợ admin/)
+        // --- XỬ LÝ CONTROLLER ---
+
+        // admin/xxx/...
         if (!empty($url[0]) && strtolower($url[0]) === 'admin') {
-            // admin/product/index
+            // admin/product/index  => controllers/Admin/ProductController.php
             $controllerName = isset($url[1]) ? ucfirst($url[1]) . 'Controller' : 'DashboardController';
             $controllerFile = APP_ROOT . 'controllers/Admin/' . $controllerName . '.php';
+
             if (file_exists($controllerFile)) {
                 require $controllerFile;
                 $this->controller = $controllerName;
                 $url = array_slice($url, 2); // bỏ 'admin' và tên controller
             }
         } else {
-            // product/index
+            // product/index => controllers/ProductController.php
             if (!empty($url[0])) {
                 $controllerName = ucfirst($url[0]) . 'Controller';
                 $controllerFile = APP_ROOT . 'controllers/' . $controllerName . '.php';
+
                 if (file_exists($controllerFile)) {
                     require $controllerFile;
                     $this->controller = $controllerName;
@@ -33,61 +37,35 @@ class App
             }
         }
 
-        // Khởi tạo controller
+        // --- KHỞI TẠO CONTROLLER ---
         if (!class_exists($this->controller)) {
             die("Controller {$this->controller} không tồn tại");
         }
         $this->controller = new $this->controller;
 
-        // Xử lý method (action)
+        // --- XỬ LÝ METHOD (ACTION) ---
         if (!empty($url[0]) && method_exists($this->controller, $url[0])) {
             $this->method = $url[0];
             $url = array_slice($url, 1);
         }
 
-        // Phần còn lại là params
+        // --- PARAMS ---
         $this->params = $url ? array_values($url) : [];
 
-        // Gọi controller/action với tham số
+        // --- GỌI CONTROLLER/ACTION ---
         call_user_func_array([$this->controller, $this->method], $this->params);
     }
 
     protected function parseUrl()
     {
-        if (isset($_GET['url'])) {
+        if (isset($_GET['url']) && $_GET['url'] !== '') {
             $url = rtrim($_GET['url'], '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);
             return explode('/', $url);
         }
-        // CONTACT FORM SUBMIT
-if ($this->url == 'contact/submit') {
-    require APP_ROOT . 'controllers/ContactController.php';
-    (new ContactController())->submit();
-    return;
-}
 
-// ADMIN - LIST CONTACTS
-if ($this->url == 'admin/contacts') {
-    require APP_ROOT . 'controllers/ContactController.php';
-    (new ContactController())->index();
-    return;
-}
-
-// ADMIN - MARK REPLIED
-if (preg_match('/admin\/contacts\/reply\/(\d+)/', $this->url, $m)) {
-    require APP_ROOT . 'controllers/ContactController.php';
-    (new ContactController())->markReplied($m[1]);
-    return;
-}
-
-// ADMIN - DELETE CONTACT
-if (preg_match('/admin\/contacts\/delete\/(\d+)/', $this->url, $m)) {
-    require APP_ROOT . 'controllers/ContactController.php';
-    (new ContactController())->delete($m[1]);
-    return;
-}
-
-        // mặc định: product/index
+        // Không có ?url= → mặc định về trang sản phẩm (hoặc home tuỳ bạn)
         return ['product', 'index'];
+        // nếu muốn về trang chủ: return ['home', 'index'];
     }
 }

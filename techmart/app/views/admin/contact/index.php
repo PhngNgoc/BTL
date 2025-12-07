@@ -34,6 +34,11 @@
             <?php endif; ?>
           </td>
           <td>
+              <!-- Nút xem chi tiết nội dung -->
+            <a href="<?= BASE_URL ?>index.php?url=admin/contact/detail/<?= $c['id'] ?>"
+              class="btn btn-sm btn-outline-primary">
+              Xem
+            </a>
             <?php if ($c['status'] !== 'replied'): ?>
               <a href="<?= BASE_URL ?>index.php?url=admin/contact/markReplied/<?= $c['id'] ?>"
                  class="btn btn-sm btn-outline-success">

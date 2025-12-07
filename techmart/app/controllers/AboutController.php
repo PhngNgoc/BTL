@@ -11,7 +11,11 @@ class AboutController extends Controller
 
     public function index()
     {
-        $data['about_us'] = $this->setting->get('about_us');
-        $this->view("about/index", $data);
+        $aboutUs = $this->setting->get('about_us');
+
+        $this->render('about/index', [
+            'title'    => 'Giới thiệu',
+            'about_us' => $aboutUs
+        ]);
     }
 }

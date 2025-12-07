@@ -90,5 +90,20 @@ public function createFromCart($info, $cart)
         throw $e;
     }
 }
+// Đếm tất cả đơn hàng
+public function countAll()
+{
+    $stmt = $this->db->query("SELECT COUNT(*) FROM orders");
+    return (int)$stmt->fetchColumn();
+}
+
+// Đếm đơn hàng theo trạng thái (vd: 'pending', 'completed' ...)
+public function countByStatus($status)
+{
+    $stmt = $this->db->prepare("SELECT COUNT(*) FROM orders WHERE status = :status");
+    $stmt->execute([':status' => $status]);
+    return (int)$stmt->fetchColumn();
+}
+
 
 }

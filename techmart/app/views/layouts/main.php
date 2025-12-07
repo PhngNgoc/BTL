@@ -70,11 +70,31 @@
                     <?php endif; ?>
                 </a>
 
-                <!-- Nút đăng nhập -->
-                <a href="<?= BASE_URL ?>index.php?url=auth/login"
-                   class="btn btn-primary rounded-pill px-4">
-                    Đăng nhập
-                </a>
+<?php if (!empty($_SESSION['user'])): ?>
+    <!-- Nếu đã đăng nhập -->
+    <span class="me-2 fw-bold">
+        Xin chào, <?= htmlspecialchars($_SESSION['user']['full_name'] ?? $_SESSION['user']['username']) ?>
+    </span>
+    
+
+    <a href="<?= BASE_URL ?>index.php?url=auth/logout"
+       class="btn btn-outline-secondary rounded-pill px-4">
+        Đăng xuất
+    </a>
+<?php else: ?>
+    <!-- Nếu chưa đăng nhập -->
+    <a href="<?= BASE_URL ?>index.php?url=auth/login"
+       class="btn btn-primary rounded-pill px-4">
+        Đăng nhập
+    </a>
+<?php endif; ?>
+<?php if (!empty($_SESSION['user']) && $_SESSION['user']['role'] === 'admin'): ?>
+    <a href="<?= BASE_URL ?>index.php?url=admin/dashboard/index"
+       class="btn btn-outline-primary ms-3">
+        Trang quản trị
+    </a>
+<?php endif; ?>
+
             </div>
         </div>
     </nav>

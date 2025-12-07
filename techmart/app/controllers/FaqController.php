@@ -11,7 +11,12 @@ class FaqController extends Controller
 
     public function index()
     {
-        $data['faqs'] = $this->faq->all();
-        $this->view("faq/index", $data);
+        $faqs = $this->faq->all();
+
+        // DÙNG render() để áp layout main.php
+        $this->render('faq/index', [
+            'title' => 'Hỏi & Đáp',
+            'faqs'  => $faqs
+        ]);
     }
 }

@@ -26,8 +26,9 @@
             </a>
 
             <div class="navbar-nav flex-row order-md-last">
-                <a class="nav-link" href="<?= BASE_URL ?>index.php" target="_blank">
-                    Xem website
+                <a class="btn btn-outline-light ms-3"
+                    href="<?= BASE_URL ?>index.php?url=home/index">
+                    ← Quay lại trang chủ
                 </a>
             </div>
         </div>
@@ -42,18 +43,38 @@
                     <div class="col-md-3 col-lg-2 mb-3">
                         <div class="list-group">
                             <a href="<?= BASE_URL ?>index.php?url=admin/dashboard/index"
-                               class="list-group-item list-group-item-action<?= (($activeMenu ?? '') === 'dashboard') ? ' active' : '' ?>">
+                                class="list-group-item list-group-item-action<?= (($activeMenu ?? '') === 'dashboard') ? ' active' : '' ?>">
                                 Dashboard
                             </a>
 
+                            <a href="<?= BASE_URL ?>index.php?url=admin/setting/index"
+                                class="list-group-item list-group-item-action<?= (($activeMenu ?? '') === 'settings') ? ' active' : '' ?>">
+                                Cấu hình website
+                            </a>
+
+                            <a href="<?= BASE_URL ?>index.php?url=admin/contact/index"
+                                class="list-group-item list-group-item-action<?= (($activeMenu ?? '') === 'contacts') ? ' active' : '' ?>">
+                                Liên hệ khách hàng
+                            </a>
+
                             <a href="<?= BASE_URL ?>index.php?url=admin/product/index"
-                               class="list-group-item list-group-item-action<?= (($activeMenu ?? '') === 'products') ? ' active' : '' ?>">
+                                class="list-group-item list-group-item-action<?= (($activeMenu ?? '') === 'products') ? ' active' : '' ?>">
                                 Quản lý sản phẩm
                             </a>
 
                             <a href="<?= BASE_URL ?>index.php?url=admin/order/index"
-                               class="list-group-item list-group-item-action<?= (($activeMenu ?? '') === 'orders') ? ' active' : '' ?>">
+                                class="list-group-item list-group-item-action<?= (($activeMenu ?? '') === 'orders') ? ' active' : '' ?>">
                                 Quản lý đơn hàng
+                            </a>
+
+                            <a href="<?= BASE_URL ?>index.php?url=admin/about/index"
+                                class="list-group-item list-group-item-action<?= (($activeMenu ?? '') === 'about') ? ' active' : '' ?>">
+                                Trang Giới thiệu
+                            </a>
+
+                            <a href="<?= BASE_URL ?>index.php?url=admin/faq/index"
+                                class="list-group-item list-group-item-action<?= (($activeMenu ?? '') === 'faqs') ? ' active' : '' ?>">
+                                Hỏi &amp; Đáp
                             </a>
                         </div>
                     </div>

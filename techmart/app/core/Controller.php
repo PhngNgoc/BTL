@@ -37,5 +37,5 @@ class Controller
         // layout
         require APP_ROOT . 'views/' . $layout . '.php';
     }
-
+    
 }

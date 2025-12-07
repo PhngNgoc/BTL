@@ -111,5 +111,11 @@ public function getFeatured($limit = 4)
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+public function countAll()
+{
+    $stmt = $this->db->query("SELECT COUNT(*) FROM products");
+    return (int)$stmt->fetchColumn();
+}
+
 }
 

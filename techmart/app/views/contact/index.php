@@ -23,7 +23,7 @@
     unset($_SESSION['old']);
     ?>
 
-    <form method="post" action="<?= BASE_URL ?>index.php?url=contact/send" class="row g-3">
+    <form method="post" action="<?= BASE_URL ?>index.php?url=contact/submit" class="row g-3">
         <div class="col-md-6">
             <label class="form-label">Họ tên *</label>
             <input type="text" name="name" class="form-control"
